@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="./styles.css">
+<style>
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: #181818;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+/* Style inputs */
+input[type=text], select, textarea {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ccc;
+  margin-top: 6px;
+  margin-bottom: 16px;
+  resize: vertical;
+}
+
+input[type=submit] {
+  background-color: #04AA6D;
+  color: white;
+  padding: 12px 20px;
+  border: none;
+  cursor: pointer;
+}
+
+input[type=submit]:hover {
+  background-color: #45a049;
+}
+
+/* Style the container/contact section */
+.container {
+  border-radius: 5px;
+  color: white;
+  padding: 10px;
+}
+
+/* Create two columns that float next to eachother */
+.column {
+  float: left;
+  width: 50%;
+  margin-top: 6px;
+  padding: 20px;
+}
+
+/* Clear floats after the columns */
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+/* Responsive layout - when the screen is less than 600px wide, make the two columns stack on top of each other instead of next to each other */
+@media screen and (max-width: 600px) {
+  .column, input[type=submit] {
+    width: 100%;
+    margin-top: 0;
+  }
+}
+</style>
+</heaD>
+ <!-- Navigation Menu -->
+ <header>  
+    <div class="container">  
+      <nav class="flex items-centre justify-between">  
+          <div class="left flex justfiy-right">  
+          <div class="logo">  
+          <a href="index.html"><img src="https://scontent.fmnl8-1.fna.fbcdn.net/v/t1.15752-9/486036186_1355760242233743_5161666449814312066_n.png?_nc_cat=106&ccb=1-7&_nc_sid=0024fc&_nc_eui2=AeFlAR1Pal8TnPzIPXIYu0Fb0JaXoOtmUsHQlpeg62ZSwUaE3Vo6-VQdvii1bSnVcOBJcpyoUpShDj5LgDZrY8fm&_nc_ohc=rMF8LGZHFgkQ7kNvgGUefrg&_nc_oc=Adl9i_ZS3V_X4mrO9_S7JTsKQ-6Dd0GO6w4RLqFUBVdvZ--o9gQusA8NgqIrC_o2Dqg&_nc_ad=z-m&_nc_cid=0&_nc_zt=23&_nc_ht=scontent.fmnl8-1.fna&oh=03_Q7cD1wETeMmtZvFkMh8WNc2BYkVmZ6G2cT2JdaQmFvfWQI_VxQ&oe=6811DC23 " width="100px">
+          </a> 
+          </div>  
+          <div>  
+            <a href="index.html">Home</a>  
+            <a href="About.html">About</a>  
+            <a href="Portfolio.html">Portfolio</a>  
+           
+          </div>  
+        </div>  
+        <div class="right">  
+           <a href= "Contacts.html" class="btn btn-primary">Contact</a>
+        </div>  
+      </nav>
+    </div>  
+  </header>
+<body>
+
+
+
+<div class="container">
+  <div style="text-align:center">
+    <h2 >Contacts </h2>
+    <br>
+  </div>
+  <div class="row">
+    <div class="column">
+      <img src="203de99c-3deb-4848-9d41-13009b8905c7.png" style="width:100%">
+    </div>
+    <div class="column">
+      <form action="/action_page.php">
+        <label for="fname">First Name</label>
+        <input type="text" id="fname" name="firstname" placeholder="Your name..">
+        <label for="lname">Last Name</label>
+        <input type="text" id="lname" name="lastname" placeholder="Your last name..">
+    
+        <label for="subject">Message</label>
+        <textarea id="subject" name="subject" placeholder="Write something.." style="height:170px"></textarea>
+        <input type="submit" value="Submit">
+      </form>
+      <br>
+      <br>
+      <p style="color:#D7CCC8 ;" ><strong>Email: </strong> <a href="mailto:kgaller4320qc@student.fatima.edu.ph">kgaller4320qc@student.fatima.edu.ph</a> | <strong>Phone:</strong> 0931 202 6637</p>
+      <br>
+      <p style="color:#D7CCC8 ;" "> <strong>Facebook: </strong><a href="https://www.facebook.com/Khylegaller" target="_blank">https://www.facebook.com/Khylegaller</a></p>
+      <br>
+      <p style="color:#D7CCC8 ;" ><strong>Address:</strong> 235 Central, Buenavista, STA. Maria, Bulacan</p>
+  </header>
+    </div>
+  </div>
+</div>
+<br>
+
+
+</body>
+<footer style="color: white">EST 2025 - KHYLE MAVERICK GALLER</footer>
+</html>
