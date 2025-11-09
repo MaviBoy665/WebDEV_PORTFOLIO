@@ -66,29 +66,136 @@ input[type=submit]:hover {
     margin-top: 0;
   }
 }
+
+/* 🌈 Animated gradient background */
+.animated-bg {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: linear-gradient(120deg, #0a0a0a, #024d3d, #0a0a0a, #045d41);
+  background-size: 400% 400%;
+  animation: gradientShift 15s ease infinite;
+  z-index: -2;
+}
+@keyframes gradientShift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+/* 🌟 Fade-in effect */
+.fade-in {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.8s ease, transform 0.8s ease;
+}
+.fade-in.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* 🧩 Form focus glow */
+input.focused, textarea.focused {
+  box-shadow: 0 0 10px #04AA6D;
+  border-color: #04AA6D;
+}
+
+/* 🎉 Popup animation */
+.popup-message {
+  position: fixed;
+  top: 30px;
+  left: 50%;
+  transform: translateX(-50%) scale(0.8);
+  background: #04AA6D;
+  color: white;
+  padding: 12px 20px;
+  border-radius: 8px;
+  font-weight: 500;
+  opacity: 0;
+  transition: all 0.3s ease;
+  z-index: 9999;
+}
+.popup-message.show {
+  opacity: 1;
+  transform: translateX(-50%) scale(1);
+}
+
+/* 🧨 Confetti burst */
+.confetti {
+  position: fixed;
+  top: 0;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  animation: fall 1.5s ease-out forwards;
+  z-index: 9999;
+}
+@keyframes fall {
+  0% { transform: translateY(0) rotate(0); opacity: 1; }
+  100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
+}
+
+/* 🌠 Floating card */
+.column {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  will-change: transform;
+}
+.column:hover {
+  box-shadow: 0 15px 25px rgba(4, 170, 109, 0.3);
+}
+
+/* 🆙 Scroll-to-top button */
+.scroll-top-btn {
+  position: fixed;
+  bottom: 25px;
+  right: 25px;
+  width: 45px;
+  height: 45px;
+  border: none;
+  border-radius: 50%;
+  background: #04AA6D;
+  color: white;
+  font-size: 1.5rem;
+  cursor: pointer;
+  opacity: 0;
+  visibility: hidden;
+  transition: all 0.3s ease;
+  box-shadow: 0 5px 15px rgba(4, 170, 109, 0.4);
+  z-index: 999;
+}
+.scroll-top-btn.show {
+  opacity: 1;
+  visibility: visible;
+}
+.scroll-top-btn:hover {
+  transform: scale(1.1);
+}
+
 </style>
 </heaD>
  <!-- Navigation Menu -->
  <header>  
-<header>  
-   <div class="container">
-      <nav class="flex items-centre justify-between">
-        <div class="left flex justfiy-right">
-          <div class="logo">
-            <a href="index.html"><img src="mylogo.png" width="100px" alt="logo"></a>
-          </div>
-          <div class="nav-links">
-            <a href="index.html">Home</a>
-            <a href="About.html">About</a>
-            <a href="Portfolio.html">Portfolio</a>
-            <a href="Files.html">File</a>
-          </div>
-        </div>
-        <div class="right">
-          <a href="Contacts.html" class="btn btn-primary">Contact</a>
-        </div>
+    <div class="container">  
+      <nav class="flex items-centre justify-between">  
+          <div class="left flex justfiy-right">  
+          <div class="logo">  
+          <a href="index.html"><img src="mylogo.png" width="100px">
+          </a> 
+          </div>  
+          <div>  
+            <a href="index.html">Home</a>  
+            <a href="About.html">About</a>  
+            <a href="Portfolio.html">Portfolio</a>  
+             <a href="Files.html">File</a> 
+           
+          </div>  
+        </div>  
+        <div class="right">  
+           <a href= "Contacts.html" class="btn btn-primary">Contact</a>
+        </div>  
       </nav>
-
     </div>  
   </header>
 <body>
@@ -129,106 +236,100 @@ input[type=submit]:hover {
 <br>
 
 <script>
-// 🌟 Smooth fade-in effect on scroll
-const fadeElements = document.querySelectorAll(".column, h2, footer, form, p, img");
-const observer = new IntersectionObserver(entries => {
+// 🌈 Animated Gradient Background
+const gradient = document.createElement("div");
+gradient.className = "animated-bg";
+document.body.prepend(gradient);
+
+// 🎬 Fade-in on scroll
+const faders = document.querySelectorAll(".column, h2, form, footer, img, p");
+const appearOptions = { threshold: 0.2 };
+const appearOnScroll = new IntersectionObserver(function(entries, appearOnScroll) {
   entries.forEach(entry => {
-    if (entry.isIntersecting) {
-      entry.target.classList.add("visible");
+    if (!entry.isIntersecting) return;
+    entry.target.classList.add("visible");
+    appearOnScroll.unobserve(entry.target);
+  });
+}, appearOptions);
+faders.forEach(fader => {
+  fader.classList.add("fade-in");
+  appearOnScroll.observe(fader);
+});
+
+// ⌨️ Typing animation for title
+const title = document.querySelector("h2");
+if (title) {
+  const text = title.textContent;
+  title.textContent = "";
+  let i = 0;
+  function type() {
+    if (i < text.length) {
+      title.textContent += text.charAt(i);
+      i++;
+      setTimeout(type, 100);
     }
-  });
-}, { threshold: 0.2 });
-fadeElements.forEach(el => {
-  el.classList.add("fade-in");
-  observer.observe(el);
+  }
+  type();
+}
+
+// ✨ Input focus glow
+document.querySelectorAll("input, textarea").forEach(el => {
+  el.addEventListener("focus", () => el.classList.add("focused"));
+  el.addEventListener("blur", () => el.classList.remove("focused"));
 });
 
-// 🌟 Input focus glow
-const inputs = document.querySelectorAll("input[type=text], textarea");
-inputs.forEach(input => {
-  input.addEventListener("focus", () => {
-    input.style.borderColor = "#04AA6D";
-    input.style.boxShadow = "0 0 8px #04AA6D";
-  });
-  input.addEventListener("blur", () => {
-    input.style.borderColor = "#ccc";
-    input.style.boxShadow = "none";
-  });
-});
-
-// 🌟 Fake submit animation
+// 🎉 Form submit success with confetti
 const form = document.querySelector("form");
 form.addEventListener("submit", e => {
   e.preventDefault();
+
   const popup = document.createElement("div");
   popup.className = "popup-message";
-  popup.textContent = "✅ Your message has been sent successfully!";
+  popup.textContent = "✅ Message sent successfully!";
   document.body.appendChild(popup);
   setTimeout(() => popup.classList.add("show"), 50);
+
+  // Confetti burst
+  for (let i = 0; i < 50; i++) {
+    const confetti = document.createElement("span");
+    confetti.className = "confetti";
+    confetti.style.left = Math.random() * 100 + "vw";
+    confetti.style.background = `hsl(${Math.random() * 360}, 70%, 60%)`;
+    document.body.appendChild(confetti);
+    setTimeout(() => confetti.remove(), 1500);
+  }
+
   setTimeout(() => {
     popup.classList.remove("show");
     setTimeout(() => popup.remove(), 500);
-  }, 3000);
+  }, 2500);
   form.reset();
 });
 
-// 🌟 Floating glow background
-const canvas = document.createElement("canvas");
-canvas.id = "bg-glow";
-document.body.appendChild(canvas);
-const ctx = canvas.getContext("2d");
-let w, h;
-function resize() {
-  w = canvas.width = window.innerWidth;
-  h = canvas.height = window.innerHeight;
-}
-window.addEventListener("resize", resize);
-resize();
-
-const dots = Array.from({length: 25}, () => ({
-  x: Math.random() * w,
-  y: Math.random() * h,
-  r: Math.random() * 3 + 2,
-  dx: Math.random() * 0.6 - 0.3,
-  dy: Math.random() * 0.6 - 0.3
-}));
-
-function animate() {
-  ctx.clearRect(0, 0, w, h);
-  dots.forEach(dot => {
-    ctx.beginPath();
-    ctx.arc(dot.x, dot.y, dot.r, 0, Math.PI * 2);
-    ctx.fillStyle = "rgba(4, 170, 109, 0.2)";
-    ctx.fill();
-    dot.x += dot.dx;
-    dot.y += dot.dy;
-    if (dot.x < 0 || dot.x > w) dot.dx *= -1;
-    if (dot.y < 0 || dot.y > h) dot.dy *= -1;
-  });
-  requestAnimationFrame(animate);
-}
-animate();
-
-// 🌟 Scroll-to-top button
+// 🆙 Scroll-to-top button
 const topBtn = document.createElement("button");
 topBtn.textContent = "↑";
 topBtn.className = "scroll-top-btn";
 document.body.appendChild(topBtn);
 window.addEventListener("scroll", () => {
-  if (window.scrollY > 300) topBtn.classList.add("show");
-  else topBtn.classList.remove("show");
+  topBtn.classList.toggle("show", window.scrollY > 300);
 });
-topBtn.addEventListener("click", () => {
-  window.scrollTo({ top: 0, behavior: "smooth" });
+topBtn.addEventListener("click", () => window.scrollTo({ top: 0, behavior: "smooth" }));
+
+// 🌟 Floating card animation
+document.querySelectorAll(".column").forEach(col => {
+  col.addEventListener("mousemove", e => {
+    const rect = col.getBoundingClientRect();
+    const x = e.clientX - rect.left;
+    const y = e.clientY - rect.top;
+    col.style.transform = `rotateY(${(x / rect.width - 0.5) * 10}deg) rotateX(${-(y / rect.height - 0.5) * 10}deg)`;
+  });
+  col.addEventListener("mouseleave", () => {
+    col.style.transform = "rotateY(0) rotateX(0)";
+  });
 });
 </script>
 
 </body>
 <footer style="color: white">EST 2025 - KHYLE MAVERICK GALLER</footer>
 </html>
-
-
-
-
-
-
