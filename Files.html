@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="stylesheet" href="./styles.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lato:wght@100;400;700&family=Poppins:wght@200;400;500;600&display=swap" rel="stylesheet">
+<title>File Manager</title>
+
+</head>
+<body>
+  <!-- Navigation Menu -->
+  <header>  
+    <div class="container">  
+      <nav class="flex items-centre justify-between">  
+        <div class="left flex justfiy-right">  
+          <div class="logo">  
+            <a href="index.html"><img src="https://scontent.fmnl8-1.fna.fbcdn.net/v/t1.15752-9/486036186_1355760242233743_5161666449814312066_n.png?_nc_cat=106&ccb=1-7&_nc_sid=0024fc&_nc_eui2=AeFlAR1Pal8TnPzIPXIYu0Fb0JaXoOtmUsHQlpeg62ZSwUaE3Vo6-VQdvii1bSnVcOBJcpyoUpShDj5LgDZrY8fm&_nc_ohc=rMF8LGZHFgkQ7kNvgGUefrg&_nc_oc=Adl9i_ZS3V_X4mrO9_S7JTsKQ-6Dd0GO6w4RLqFUBVdvZ--o9gQusA8NgqIrC_o2Dqg&_nc_ad=z-m&_nc_cid=0&_nc_zt=23&_nc_ht=scontent.fmnl8-1.fna&oh=03_Q7cD1wETeMmtZvFkMh8WNc2BYkVmZ6G2cT2JdaQmFvfWQI_VxQ&oe=6811DC23" width="100px" alt="Logo">
+            </a> 
+          </div>  
+          <div>  
+            <a href="index.html">Home</a>  
+            <a href="About.html">About</a>  
+            <a href="Portfolio.html">Portfolio</a>  
+            <a href="Files.html">File</a>  
+          </div>  
+        </div>  
+        <div class="right">  
+          <a href="Contacts.html" class="btn btn-primary">Contact</a>
+        </div>  
+      </nav>
+    </div>  
+  </header>
+
+  <!-- File Manager -->
+  <div class="file-manager-container">
+    <!-- Search Section -->
+    <div class="search-section">
+      <div class="search-box">
+        <input type="text" id="searchInput" placeholder="🔍 Search your files..." onkeyup="searchFiles()">
+        <button class="btn btn-primary" onclick="searchFiles()">Search</button>
+      </div>
+    </div>
+
+    <!-- Upload Section -->
+    <div class="upload-section" onclick="document.getElementById('fileInput').click()">
+      <h3>📤 Upload Files</h3>
+      <p>Click here or drag and drop to upload files</p>
+      <input type="file" id="fileInput" multiple>
+      <button class="btn btn-primary" onclick="event.stopPropagation()">Choose Files</button>
+    </div>
+
+    <!-- Files List -->
+    <div class="files-header">
+      <h2>My Files</h2>
+      <span class="files-count" id="filesCount">0 files</span>
+    </div>
+
+    <div class="files-list" id="filesList">
+      <div class="empty-state">
+        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"></path>
+        </svg>
+        <h3>No files uploaded yet</h3>
+        <p>Upload your first file to get started</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal for viewing files -->
+  <div class="modal" id="viewModal">
+    <div class="modal-content">
+      <button class="modal-close" onclick="closeModal()">×</button>
+      <div id="modalBody"></div>
+    </div>
+  </div>
+
+  <footer>EST 2025 - KHYLE MAVERICK GALLER</footer>
+
+  <script>
+    let uploadedFiles = [];
+
+    // File input change event
+    document.getElementById('fileInput').addEventListener('change', function(e) {
+      handleFiles(e.target.files);
+    });
+
+    // Drag and drop
+    const uploadSection = document.querySelector('.upload-section');
+    
+    uploadSection.addEventListener('dragover', (e) => {
+      e.preventDefault();
+      uploadSection.style.borderColor = 'var(--primary)';
+    });
+
+    uploadSection.addEventListener('dragleave', () => {
+      uploadSection.style.borderColor = 'rgba(29, 221, 189, 0.5)';
+    });
+
+    uploadSection.addEventListener('drop', (e) => {
+      e.preventDefault();
+      handleFiles(e.dataTransfer.files);
+    });
+
+    function handleFiles(files) {
+      for (let file of files) {
+        const fileObj = {
+          id: Date.now() + Math.random(),
+          name: file.name,
+          size: formatFileSize(file.size),
+          type: file.type,
+          file: file,
+          uploadDate: new Date().toLocaleString()
+        };
+        uploadedFiles.push(fileObj);
+      }
+      displayFiles();
+      updateFilesCount();
+    }
+
+    function displayFiles(filesToShow = uploadedFiles) {
+      const filesList = document.getElementById('filesList');
+      
+      if (filesToShow.length === 0) {
+        filesList.innerHTML = `
+          <div class="empty-state">
+            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"></path>
+            </svg>
+            <h3>No files found</h3>
+            <p>Try a different search term</p>
+          </div>
+        `;
+        return;
+      }
+
+      filesList.innerHTML = filesToShow.map(file => `
+        <div class="file-item">
+          <div class="file-icon-container">${getFileIcon(file.name)}</div>
+          <div class="file-info">
+            <div class="file-name">${file.name}</div>
+            <div class="file-meta">${file.size} • ${file.uploadDate}</div>
+          </div>
+          <div class="file-actions">
+            <button class="btn-view" onclick="viewFile('${file.id}')">View</button>
+            <button class="btn-download" onclick="downloadFile('${file.id}')">Download</button>
+            <button class="btn-delete" onclick="deleteFile('${file.id}')">Delete</button>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function getFileIcon(filename) {
+      const ext = filename.split('.').pop().toLowerCase();
+      const icons = {
+        'pdf': '📄',
+        'doc': '📝',
+        'docx': '📝',
+        'txt': '📃',
+        'jpg': '🖼️',
+        'jpeg': '🖼️',
+        'png': '🖼️',
+        'gif': '🖼️',
+        'zip': '📦',
+        'rar': '📦',
+        'mp3': '🎵',
+        'mp4': '🎬',
+        'xlsx': '📊',
+        'xls': '📊'
+      };
+      return icons[ext] || '📄';
+    }
+
+    function formatFileSize(bytes) {
+      if (bytes === 0) return '0 Bytes';
+      const k = 1024;
+      const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+      const i = Math.floor(Math.log(bytes) / Math.log(k));
+      return Math.round(bytes / Math.pow(k, i) * 100) / 100 + ' ' + sizes[i];
+    }
+
+    function searchFiles() {
+      const searchTerm = document.getElementById('searchInput').value.toLowerCase();
+      const filtered = uploadedFiles.filter(file => 
+        file.name.toLowerCase().includes(searchTerm)
+      );
+      displayFiles(filtered);
+    }
+
+    function viewFile(id) {
+      const file = uploadedFiles.find(f => f.id == id);
+      if (!file) return;
+
+      const modal = document.getElementById('viewModal');
+      const modalBody = document.getElementById('modalBody');
+
+      if (file.type.startsWith('image/')) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          modalBody.innerHTML = `<img src="${e.target.result}" alt="${file.name}">`;
+        };
+        reader.readAsDataURL(file.file);
+      } else if (file.type === 'text/plain') {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          modalBody.innerHTML = `<pre>${e.target.result}</pre>`;
+        };
+        reader.readAsText(file.file);
+      } else {
+        modalBody.innerHTML = `
+          <h2 style="color: var(--primary);">${file.name}</h2>
+          <p style="color: #D7CCC8; margin-top: 1rem;">
+            File type: ${file.type || 'Unknown'}<br>
+            Size: ${file.size}<br>
+            Uploaded: ${file.uploadDate}
+          </p>
+          <p style="color: rgba(215, 204, 200, 0.7); margin-top: 2rem;">
+            Preview not available for this file type. Please download to view.
+          </p>
+        `;
+      }
+
+      modal.classList.add('active');
+    }
+
+    function closeModal() {
+      document.getElementById('viewModal').classList.remove('active');
+    }
+
+    function downloadFile(id) {
+      const file = uploadedFiles.find(f => f.id == id);
+      if (!file) return;
+
+      const url = URL.createObjectURL(file.file);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = file.name;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+    }
+
+    function deleteFile(id) {
+      if (confirm('Are you sure you want to delete this file?')) {
+        uploadedFiles = uploadedFiles.filter(f => f.id != id);
+        displayFiles();
+        updateFilesCount();
+      }
+    }
+
+    function updateFilesCount() {
+      document.getElementById('filesCount').textContent = 
+        `${uploadedFiles.length} file${uploadedFiles.length !== 1 ? 's' : ''}`;
+    }
+
+    // Close modal when clicking outside
+    document.getElementById('viewModal').addEventListener('click', function(e) {
+      if (e.target === this) {
+        closeModal();
+      }
+    });
+  </script>
+</body>
+</html>
