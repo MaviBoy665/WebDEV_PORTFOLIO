@@ -36,11 +36,34 @@ header{
   header{ clip-path: none; }
 }
 
-header nav{ padding: 1.25rem 0; display:flex; align-items:center; gap:1rem; flex-wrap:wrap; }
-header nav .logo{ margin-right: 1rem; }
-header nav .left{ display:flex; gap:1rem; align-items:center; flex-wrap:wrap; }
+/* FIXED: Better navigation layout */
+header nav{ 
+  padding: 1.25rem 0; 
+  display:flex; 
+  align-items:center; 
+  justify-content: space-between; /* Keep space between logo+nav and button */
+  gap:1rem; 
+  flex-wrap:wrap; 
+}
+
+header nav .logo{ 
+  margin-right: auto; /* FIXED: Push nav items away from logo */
+  flex-shrink: 0; /* Prevent logo from shrinking */
+}
+
+header nav .left{ 
+  display:flex; 
+  gap:1rem; 
+  align-items:center; 
+  flex-wrap:wrap;
+  margin-right: auto; /* FIXED: Push CONTACT button to the right */
+}
+
 header nav .left a{
-  color:#D7CCC8; text-decoration:none; text-transform:uppercase; font-size:0.85rem;
+  color:#D7CCC8; 
+  text-decoration:none; 
+  text-transform:uppercase; 
+  font-size:0.85rem;
   transition: color .18s ease;
 }
 header nav .left a:hover{ color:var(--primary); }
@@ -52,27 +75,29 @@ header nav .left a:hover{ color:var(--primary); }
   margin: 0 auto;
 }
 
-/* HERO - make a flexible two-column that stacks */
+/* HERO - FIXED: Better control of image and text positioning */
 .hero{
   display:flex;
   gap: clamp(1rem, 3vw, 2.5rem);
   align-items: center;
   padding-block: clamp(1.5rem, 6vw, 3.5rem);
   flex-wrap: wrap;
+  justify-content: space-between; /* FIXED: Proper spacing between image and text */
 }
 
-/* left and right child containers — control widths responsively */
+/* FIXED: Better width control to prevent stretching */
 .hero .left,
 .hero .right{
-  flex: 1 1 420px; /* allow shrink/grow, preferred basis 420px */
+  flex: 1 1 300px; /* FIXED: Changed from 420px to 300px for better balance */
   min-width: 260px;
+  max-width: 48%; /* FIXED: Prevent elements from taking too much space */
 }
 
-/* image responsive */
+/* FIXED: Better image size control */
 .hero .left img{
   display:block;
   width: 100%;
-  max-width: 700px; /* upper bound */
+  max-width: 500px; /* FIXED: Reduced from 700px to prevent stretching */
   height: auto;
   object-fit: contain;
   margin: 0 auto;
@@ -194,7 +219,12 @@ h1,h2,h3,p,a,button { word-wrap: break-word; }
 @media (max-width: 768px){
   header nav .left a{ font-size:0.85rem; }
   .hero{ align-items:flex-start; }
-  .hero .left, .hero .right{ flex-basis: 100%; }
+  /* FIXED: Allow full width on smaller screens */
+  .hero .left, 
+  .hero .right{ 
+    flex-basis: 100%; 
+    max-width: 100%; /* FIXED: Remove max-width restriction on mobile */
+  }
   .hero .right{ margin-top: 0.5rem; }
   .btn{ padding: 0.55rem 1rem; font-size:0.9rem; }
   section.services .card-grid{ grid-template-columns: 1fr; }
