@@ -1018,9 +1018,7 @@ header nav .left a.active {
 .card a {
   color: var(--primary);
 }
-.card {
-  color: #222; /* dark gray looks more natural */
-}
+
 /* Scroll reveal animation (already used by JS) */
 .fade-in {
   opacity: 0;
@@ -1059,4 +1057,5 @@ header nav .left a.active {
 .scroll-top-btn:hover {
   transform: scale(1.1);
 }
+
 
