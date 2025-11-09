@@ -1060,26 +1060,3 @@ header nav .left a.active {
   transform: scale(1.1);
 }
 
-/* 🖋️ Card text color fix */
-.card {
-  color: #111; /* main text color (black) */
-  background-color: #fdfdfd; /* subtle light background to contrast */
-}
-
-/* Optional: tweak inner text for consistency */
-.card h3,
-.card h4,
-.card p {
-  color: #111; /* ensure all text inside cards is dark */
-}
-
-/* Keep buttons and icons readable if any */
-.card .btn,
-.card a {
-  color: var(--primary);
-}
-.card {
-  color: #222; /* dark gray looks more natural */
-}
-
-
