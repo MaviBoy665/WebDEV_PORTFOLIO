@@ -965,3 +965,38 @@ input[type="file"] {
     50% { border-color: var(--primary); }
   }
   
+/* --- Navigation Styling with Active Link --- */
+header nav .left a {
+  position: relative;
+  color: #D7CCC8;
+  text-decoration: none;
+  margin-right: 2rem;
+  text-transform: uppercase;
+  transition: all .2s ease;
+}
+
+/* underline animation */
+header nav .left a::after {
+  content: "";
+  position: absolute;
+  width: 0%;
+  height: 2px;
+  background: var(--primary);
+  left: 0;
+  bottom: -4px;
+  transition: width 0.3s ease;
+}
+
+/* hover underline */
+header nav .left a:hover::after {
+  width: 100%;
+}
+
+/* active link (for current page) */
+header nav .left a.active::after {
+  width: 100%;
+}
+header nav .left a.active {
+  color: var(--primary);
+}
+
