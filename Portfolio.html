@@ -108,11 +108,101 @@ rel="stylesheet">
                 </div>
                 </section>
 
-               
+  <script>
+// 🌟 Scroll reveal effect (smooth fade-in)
+const fadeEls = document.querySelectorAll('.card, .services-head, .hero img, .hero h6, .hero h1');
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add('visible');
+    }
+  });
+}, { threshold: 0.15 });
+
+fadeEls.forEach(el => {
+  el.classList.add('fade-in');
+  observer.observe(el);
+});
+
+// 🌟 Typing effect in hero
+const typingText = document.createElement("span");
+typingText.classList.add("typing-text");
+typingText.textContent = "";
+const target = document.querySelector(".hero h1");
+const fullText = "My Portfolio";
+let index = 0;
+
+function typeEffect() {
+  if (index < fullText.length) {
+    typingText.textContent += fullText.charAt(index);
+    index++;
+    setTimeout(typeEffect, 100);
+  }
+}
+target.textContent = "";
+target.appendChild(typingText);
+window.addEventListener("load", typeEffect);
+
+// 🌟 Skills progress bars animation
+const skillObserver = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.querySelector('.skill-progress').classList.add('animate');
+    }
+  });
+}, { threshold: 0.4 });
+
+document.querySelectorAll('.skill-item').forEach(skill => skillObserver.observe(skill));
+
+// 🌟 Stats counter animation
+function animateCounter(el, target) {
+  let count = 0;
+  const speed = 20;
+  const update = () => {
+    count += Math.ceil(target / 100);
+    if (count < target) {
+      el.textContent = count;
+      requestAnimationFrame(update);
+    } else {
+      el.textContent = target;
+    }
+  };
+  update();
+}
+
+const counterObserver = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting && !entry.target.classList.contains("counted")) {
+      const targetNum = parseInt(entry.target.dataset.target);
+      animateCounter(entry.target, targetNum);
+      entry.target.classList.add("counted");
+    }
+  });
+}, { threshold: 0.5 });
+
+document.querySelectorAll('.stat-number').forEach(num => counterObserver.observe(num));
+
+// 🌟 Scroll-to-top button
+const topBtn = document.createElement("button");
+topBtn.textContent = "↑";
+topBtn.className = "scroll-top-btn";
+document.body.appendChild(topBtn);
+
+window.addEventListener("scroll", () => {
+  if (window.scrollY > 400) topBtn.classList.add("show");
+  else topBtn.classList.remove("show");
+});
+
+topBtn.addEventListener("click", () => {
+  window.scrollTo({ top: 0, behavior: "smooth" });
+});
+</script>
+    <footer style="color: white;">EST 2025 - KHYLE MAVERICK GALLER</footer>         
 </body>
-<footer style="color: white;">EST 2025 - KHYLE MAVERICK GALLER</footer>
+
 
 </html>
+
 
 
 
