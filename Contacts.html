@@ -128,10 +128,105 @@ input[type=submit]:hover {
 </div>
 <br>
 
+<script>
+// 🌟 Smooth fade-in effect on scroll
+const fadeElements = document.querySelectorAll(".column, h2, footer, form, p, img");
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(entry => {
+    if (entry.isIntersecting) {
+      entry.target.classList.add("visible");
+    }
+  });
+}, { threshold: 0.2 });
+fadeElements.forEach(el => {
+  el.classList.add("fade-in");
+  observer.observe(el);
+});
+
+// 🌟 Input focus glow
+const inputs = document.querySelectorAll("input[type=text], textarea");
+inputs.forEach(input => {
+  input.addEventListener("focus", () => {
+    input.style.borderColor = "#04AA6D";
+    input.style.boxShadow = "0 0 8px #04AA6D";
+  });
+  input.addEventListener("blur", () => {
+    input.style.borderColor = "#ccc";
+    input.style.boxShadow = "none";
+  });
+});
+
+// 🌟 Fake submit animation
+const form = document.querySelector("form");
+form.addEventListener("submit", e => {
+  e.preventDefault();
+  const popup = document.createElement("div");
+  popup.className = "popup-message";
+  popup.textContent = "✅ Your message has been sent successfully!";
+  document.body.appendChild(popup);
+  setTimeout(() => popup.classList.add("show"), 50);
+  setTimeout(() => {
+    popup.classList.remove("show");
+    setTimeout(() => popup.remove(), 500);
+  }, 3000);
+  form.reset();
+});
+
+// 🌟 Floating glow background
+const canvas = document.createElement("canvas");
+canvas.id = "bg-glow";
+document.body.appendChild(canvas);
+const ctx = canvas.getContext("2d");
+let w, h;
+function resize() {
+  w = canvas.width = window.innerWidth;
+  h = canvas.height = window.innerHeight;
+}
+window.addEventListener("resize", resize);
+resize();
+
+const dots = Array.from({length: 25}, () => ({
+  x: Math.random() * w,
+  y: Math.random() * h,
+  r: Math.random() * 3 + 2,
+  dx: Math.random() * 0.6 - 0.3,
+  dy: Math.random() * 0.6 - 0.3
+}));
+
+function animate() {
+  ctx.clearRect(0, 0, w, h);
+  dots.forEach(dot => {
+    ctx.beginPath();
+    ctx.arc(dot.x, dot.y, dot.r, 0, Math.PI * 2);
+    ctx.fillStyle = "rgba(4, 170, 109, 0.2)";
+    ctx.fill();
+    dot.x += dot.dx;
+    dot.y += dot.dy;
+    if (dot.x < 0 || dot.x > w) dot.dx *= -1;
+    if (dot.y < 0 || dot.y > h) dot.dy *= -1;
+  });
+  requestAnimationFrame(animate);
+}
+animate();
+
+// 🌟 Scroll-to-top button
+const topBtn = document.createElement("button");
+topBtn.textContent = "↑";
+topBtn.className = "scroll-top-btn";
+document.body.appendChild(topBtn);
+window.addEventListener("scroll", () => {
+  if (window.scrollY > 300) topBtn.classList.add("show");
+  else topBtn.classList.remove("show");
+});
+topBtn.addEventListener("click", () => {
+  window.scrollTo({ top: 0, behavior: "smooth" });
+});
+</script>
 
 </body>
 <footer style="color: white">EST 2025 - KHYLE MAVERICK GALLER</footer>
 </html>
+
 
 
 
