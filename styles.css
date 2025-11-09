@@ -1,297 +1,209 @@
+/* Add this in your HTML head:
+<meta name="viewport" content="width=device-width, initial-scale=1">
+*/
+
 @import 'utilities.css';
 
-:root {
+:root{
   --primary: rgb(29, 221, 189);
   --bgDark: rgb(12, 12, 12);
   --white: rgb(250, 250, 250);
   --secondary: rgb(0, 59, 50);
   --bgLight: rgb(190, 181, 181);
+  --container-max: 1152px;
+  --gutter: 1rem;
 }
 
-* {
-  padding: 0;
-  margin: 0;
-  box-sizing: border-box;
-  -webkit-font-smoothing: antialiased;
-}
-
-body {
+/* Reset + safety */
+*{ padding:0; margin:0; box-sizing:border-box; -webkit-font-smoothing:antialiased; }
+html,body{ height:100%; }
+body{
   font-family: 'Poppins', sans-serif;
   background-color: #181818;
+  color: #D7CCC8;
+  -webkit-text-size-adjust: 100%;
+  overflow-x: hidden; /* prevent accidental horizontal scroll from small overflows */
 }
 
-header {
+/* Header */
+header{
   background-color: var(--bgDark);
+  /* clip-path can behave oddly on small screens; limit its effect */
   clip-path: polygon(0 0, 100% 0, 100% 100%, 73% 94%, 0 100%);
 }
-
-header nav {
-  padding: 2rem 0;
+@media (max-width:600px){
+  /* simplify clip-path for very small screens */
+  header{ clip-path: none; }
 }
 
-header nav .left a {
-  color: #D7CCC8;
-  text-decoration: none;
-  margin-right: 2rem;
-  text-transform: uppercase;
-  transition: all .2s ease;
+header nav{ padding: 1.25rem 0; display:flex; align-items:center; gap:1rem; flex-wrap:wrap; }
+header nav .logo{ margin-right: 1rem; }
+header nav .left{ display:flex; gap:1rem; align-items:center; flex-wrap:wrap; }
+header nav .left a{
+  color:#D7CCC8; text-decoration:none; text-transform:uppercase; font-size:0.85rem;
+  transition: color .18s ease;
 }
+header nav .left a:hover{ color:var(--primary); }
 
-header nav .left a:hover {
-  color: var(--primary);
-}
-
-header nav .logo {
-  margin-right: 3rem;
-}
-
-.container {
-  max-width: 1152px;
-  padding: 0 15px;
+/* Container */
+.container{
+  max-width: var(--container-max);
+  padding-inline: clamp(0.75rem, 3vw, 1.5rem);
   margin: 0 auto;
 }
 
-.hero {
-  padding-top: 2rem;
-  padding-bottom: 3rem;
-}
-
-.hero .left img {
-  width: 700px;
-  max-width: 100%;
-}
-
-.hero .right {
-  color: #D7CCC8;
-  margin-top: -7rem;
-}
-
-.hero .right h6 {
-  font-size: 1.6rem;
-  color: var(--primary);
-  margin-bottom: 0.5rem;
-}
-
-.hero .right h1 {
-  font-size: 4rem;
-  font-weight: 100;
-  line-height: 1.2;
-  margin-bottom: 2rem;
-}
-
-.hero .right h1 span {
-  color: #D7CCC8;
-}
-
-.hero .right p {
-  line-height: 1.9;
-  margin-bottom: 2rem;
-}
-
-/* Utility Classes */
-.flex {
-  display: flex;
-}
-.items-centre {
+/* HERO - make a flexible two-column that stacks */
+.hero{
+  display:flex;
+  gap: clamp(1rem, 3vw, 2.5rem);
   align-items: center;
-}
-.justify-between {
-  justify-content: space-between;
-}
-.justify-center {
-  justify-content: center;
-}
-.justify-right {
-  justify-content: right;
-}
-.flex-1 {
-  flex: 1;
+  padding-block: clamp(1.5rem, 6vw, 3.5rem);
+  flex-wrap: wrap;
 }
 
-/* Buttons */
-.btn {
-  padding: 0.6rem 2rem;
-  font-size: 1rem;
-  font-weight: 600;
-  border: 2px solid transparent;
-  outline: none;
-  cursor: pointer;
-  text-transform: uppercase;
-  transition: all .2s ease;
+/* left and right child containers — control widths responsively */
+.hero .left,
+.hero .right{
+  flex: 1 1 420px; /* allow shrink/grow, preferred basis 420px */
+  min-width: 260px;
 }
-.btn-primary {
+
+/* image responsive */
+.hero .left img{
+  display:block;
+  width: 100%;
+  max-width: 700px; /* upper bound */
+  height: auto;
+  object-fit: contain;
+  margin: 0 auto;
+}
+
+/* hero text */
+.hero .right { color:#D7CCC8; margin-top: 0; }
+.hero .right h6{ font-size: clamp(1rem, 2.2vw, 1.6rem); color: var(--primary); margin-bottom: 0.5rem; }
+.hero .right h1{ font-size: clamp(2rem, 6vw, 4rem); font-weight:100; line-height:1.1; margin-bottom:1.25rem; }
+.hero .right h1 span{ color:#D7CCC8; }
+.hero .right p{ font-size: clamp(0.95rem, 1.6vw, 1.05rem); line-height:1.6; margin-bottom: 1.25rem; }
+
+/* Utilities */
+.flex{ display:flex; }
+.items-centre{ align-items:center; }
+.justify-between{ justify-content:space-between; }
+.justify-center{ justify-content:center; }
+.justify-right{ justify-content:right; }
+.flex-1{ flex:1; }
+
+/* Buttons - avoid absolute/negative positioning */
+.btn{
+  padding: 0.6rem 1.25rem;
+  font-size: 0.95rem;
+  font-weight:600;
+  border:2px solid transparent;
+  cursor:pointer;
+  text-transform:uppercase;
+  transition: all .18s ease;
+  display:inline-block;
+  border-radius: 6px;
+}
+.btn-primary{
   background-color: var(--primary);
   color: var(--secondary);
-  margin-top: -15rem;
+  margin: 0; /* removed negative margin that broke layout */
 }
-.btn-primary:hover {
+.btn-primary:hover{
   background: transparent;
   border-color: var(--primary);
   color: var(--primary);
 }
-.btn-secondary {
-  background: transparent;
-  color: var(--primary);
-  border-color: var(--primary);
+.btn-secondary{
+  background:transparent;
+  color:var(--primary);
+  border-color:var(--primary);
 }
-.btn-secondary:hover {
-  background: var(--primary);
-  color: var(--secondary);
+.btn-secondary:hover{ background:var(--primary); color:var(--secondary); }
+
+/* Sections: use clamp for responsive padding */
+section{
+  padding-block: clamp(2rem, 6vw, 6rem);
+  padding-inline: clamp(1rem, 4vw, 2rem);
 }
 
-/* Sections */
-section {
-  padding: 6rem;
+/* ABOUT */
+section.about h1{ margin-bottom:1rem; font-size: clamp(1.1rem, 1.8vw, 1.6rem); font-weight:600; }
+section.about h1 span{ color:#D7CCC8; }
+section.about h3{ font-size: 1rem; margin-bottom:1rem; font-weight:600; }
+section.about p{ font-family:'Lato',sans-serif; color:#D7CCC8; line-height:1.9; margin-bottom:1rem; font-size:clamp(0.95rem,1.4vw,1rem); }
+section.about .socials{ display:flex; gap:0.6rem; }
+section.about .socials a{
+  display:flex; align-items:center; justify-content:center; width:38px; height:38px;
+  border-radius:50%;
 }
-section.about h1 {
-  margin-bottom: 1rem;
-  font-size: 1.6rem;
-  font-weight: 600;
-}
-section.about h1 span {
-  color: #D7CCC8;
-}
-section.about h3 {
-  font-size: 1rem;
-  margin-bottom: 1rem;
-  font-weight: 600;
-}
-section.about p {
-  font-family: 'Lato', sans-serif;
-  color: #D7CCC8;
-  line-height: 1.9rem;
-  margin-bottom: 2rem;
-}
-section.about .socials {
-  display: flex;
-}
-section.about .socials a {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 35px;
-  margin-right: 0.8rem;
-  border-radius: 50%;
-}
-section.about .socials a:hover {
-  background: var(--primary);
+section.about .socials a:hover{ background:var(--primary); }
+
+/* SERVICES */
+section.services{ background: rgb(17,17,17); }
+.services-head{ text-align:center; margin-bottom:1rem; line-height:0.5rem; color:var(--primary); }
+.services-head + p{
+  color:#D7CCC8; font-family:'Lato',sans-serif; margin-bottom: 2.5rem; text-align:center; font-weight:400;
 }
 
-/* Services */
-section.services {
-  background: rgb(17, 17, 17);
+/* Card grid: responsive using minmax */
+section.services .card-grid{
+  display:grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: clamp(1rem, 2.5vw, 2rem);
 }
-.services-head {
-  text-align: center;
-  margin-bottom: 1rem;
-  line-height: 0.5rem;
-  color: var(--primary);
-}
-.services-head + p {
-  color: #D7CCC8;
-  font-family: 'Lato', sans-serif;
-  margin-bottom: 6rem;
-  text-align: center;
-  font-weight: 400;
-}
-section.services .card-grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  column-gap: 2rem;
-}
-section.services .card-grid .card {
+
+/* Card */
+section.services .card-grid .card{
   background: var(--white);
-  padding: 3rem 2rem;
+  padding: clamp(1.5rem, 2.5vw, 3rem);
   position: relative;
   text-align: center;
-  transition: all .2s ease;
+  transition: transform .18s ease, background .18s ease;
+  border-radius: 8px;
+  overflow: hidden;
 }
-section.services .card-grid .card img {
-  position: absolute;
-  top: -1.5rem;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 50px;
-  background: #D7CCC8;
+section.services .card-grid .card img{
+  /* place the small icon at top center but avoid overflow */
+  width: 50px; height: 50px; display:block;
+  margin: -30px auto 0; /* slight overlap */
+  background:#D7CCC8; border-radius:6px;
+  position: relative;
 }
-section.services .card-grid .card h2 {
-  font-weight: 600;
-  font-size: 1.2rem;
-  margin-bottom: 0.5rem;
-}
-section.services .card-grid .card p {
-  font-family: 'Lato', sans-serif;
-  color: var(--secondary);
-  line-height: 1.6;
-}
-section.services .card-grid .card:hover {
-  background: var(--primary);
-}
+section.services .card-grid .card h2{ font-weight:600; font-size:1.1rem; margin-top:1.25rem; }
+section.services .card-grid .card p{ font-family:'Lato',sans-serif; color:var(--secondary); line-height:1.6; margin-top:0.6rem; }
+section.services .card-grid .card:hover{ transform: translateY(-6px); background: var(--primary); color:var(--white); }
 section.services .card-grid .card:hover h2,
-section.services .card-grid .card:hover p {
-  color: var(--white);
+section.services .card-grid .card:hover p{ color: var(--white); }
+
+/* Fix for any long text: wrap */
+h1,h2,h3,p,a,button { word-wrap: break-word; }
+
+/* --- Responsive tweaks (breakpoints) --- */
+
+/* medium tablets */
+@media (max-width: 992px){
+  header nav { padding: 1rem 0; }
+  .hero{ gap:1rem; }
+  .hero .right h1{ font-size: clamp(2.4rem, 5.8vw, 3rem); }
+  section.services .card-grid{ grid-template-columns: repeat(2, 1fr); }
 }
 
-/* --- Responsive Styles --- */
-
-/* Tablets */
-@media (max-width: 992px) {
-  .hero {
-    flex-direction: column;
-    text-align: center;
-  }
-  .hero .right {
-    margin-top: 2rem;
-  }
-  .hero .right h1 {
-    font-size: 3rem;
-  }
-  section {
-    padding: 4rem 2rem;
-  }
-  section.services .card-grid {
-    grid-template-columns: repeat(2, 1fr);
-    row-gap: 2rem;
-  }
+/* small tablets / large phones */
+@media (max-width: 768px){
+  header nav .left a{ font-size:0.85rem; }
+  .hero{ align-items:flex-start; }
+  .hero .left, .hero .right{ flex-basis: 100%; }
+  .hero .right{ margin-top: 0.5rem; }
+  .btn{ padding: 0.55rem 1rem; font-size:0.9rem; }
+  section.services .card-grid{ grid-template-columns: 1fr; }
 }
 
-/* Mobile Devices */
-@media (max-width: 768px) {
-  header nav .left a {
-    margin-right: 1rem;
-    font-size: 0.9rem;
-  }
-  .hero .right h1 {
-    font-size: 2.5rem;
-  }
-  .hero .right p {
-    font-size: 0.95rem;
-  }
-  .btn {
-    padding: 0.5rem 1.5rem;
-    font-size: 0.9rem;
-  }
-  section.services .card-grid {
-    grid-template-columns: 1fr;
-  }
-  section.about .socials {
-    justify-content: center;
-  }
-}
-
-/* Small Phones */
-@media (max-width: 480px) {
-  header nav {
-    flex-direction: column;
-    align-items: center;
-  }
-  .hero .right h1 {
-    font-size: 2rem;
-  }
-  section {
-    padding: 3rem 1rem;
-  }
-  .btn-primary {
-    margin-top: 0;
-  }
+/* small phones */
+@media (max-width: 480px){
+  header nav{ justify-content:center; }
+  .hero .right h1{ font-size: clamp(1.6rem, 7vw, 2rem); }
+  section{ padding-block: clamp(1.2rem,6vw,2.5rem); padding-inline: .75rem; }
+  .services-head + p{ margin-bottom: 1.5rem; }
 }
