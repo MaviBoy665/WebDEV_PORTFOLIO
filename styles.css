@@ -964,19 +964,7 @@ input[type="file"] {
     0%, 100% { border-color: transparent; }
     50% { border-color: var(--primary); }
   }
-  /* --- Background Glow Animation --- */
-.bg-glow {
-  position: fixed;
-  width: 400px;
-  height: 400px;
-  background: radial-gradient(circle, rgba(29,221,189,0.15) 0%, rgba(29,221,189,0) 70%);
-  top: 0;
-  left: 0;
-  pointer-events: none;
-  transition: transform 0.2s ease, opacity 0.3s ease;
-  filter: blur(60px);
-  z-index: 0;
-}
+ 
 
 /* --- Hero Animations --- */
 .hero {
@@ -1037,3 +1025,4 @@ input[type="file"] {
 .nav-links a:hover::after {
   width: 100%;
 }
+
