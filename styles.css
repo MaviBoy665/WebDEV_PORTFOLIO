@@ -964,277 +964,76 @@ input[type="file"] {
     0%, 100% { border-color: transparent; }
     50% { border-color: var(--primary); }
   }
+  /* --- Background Glow Animation --- */
+.bg-glow {
+  position: fixed;
+  width: 400px;
+  height: 400px;
+  background: radial-gradient(circle, rgba(29,221,189,0.15) 0%, rgba(29,221,189,0) 70%);
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  transition: transform 0.2s ease, opacity 0.3s ease;
+  filter: blur(60px);
+  z-index: 0;
+}
 
-  /* Additional styles for file manager */
-  .file-manager-container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 2rem 1rem;
-  }
+/* --- Hero Animations --- */
+.hero {
+  position: relative;
+  z-index: 1;
+  overflow: hidden;
+}
 
-  .search-section {
-    margin-bottom: 2rem;
-  }
+.hero .left img {
+  filter: drop-shadow(0 0 15px rgba(29,221,189,0.2));
+  transition: transform 0.6s ease;
+}
+.hero .left img:hover {
+  transform: scale(1.05);
+}
 
-  .search-box {
-    display: flex;
-    gap: 1rem;
-    align-items: center;
-    background: rgba(250, 250, 250, 0.05);
-    padding: 1rem;
-    border-radius: 12px;
-    border: 2px solid rgba(29, 221, 189, 0.2);
-  }
+/* --- Fade In Scroll Effect --- */
+.fade-in {
+  opacity: 0;
+  transform: translateY(40px);
+  transition: opacity 0.9s ease, transform 0.9s ease;
+}
+.fade-in.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
 
-  .search-box input {
-    flex: 1;
-    padding: 0.8rem 1.2rem;
-    border: none;
-    border-radius: 8px;
-    background: rgba(250, 250, 250, 0.1);
-    color: #D7CCC8;
-    font-size: 1rem;
-    font-family: 'Poppins', sans-serif;
-  }
+/* --- Scroll Down Indicator --- */
+.scroll-indicator {
+  margin-top: 3rem;
+  text-align: left;
+  animation: float 2s ease-in-out infinite;
+}
+.scroll-indicator span {
+  color: var(--primary);
+  font-size: 0.9rem;
+  letter-spacing: 2px;
+}
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(6px); }
+}
 
-  .search-box input::placeholder {
-    color: rgba(215, 204, 200, 0.5);
-  }
-
-  .search-box input:focus {
-    outline: 2px solid var(--primary);
-    background: rgba(250, 250, 250, 0.15);
-  }
-
-  .search-box button {
-    padding: 0.8rem 1.5rem;
-  }
-
-  .upload-section {
-    background: linear-gradient(135deg, rgba(29, 221, 189, 0.05), rgba(29, 221, 189, 0.02));
-    border: 2px dashed var(--primary);
-    border-radius: 12px;
-    padding: 2rem;
-    text-align: center;
-    margin-bottom: 2rem;
-    cursor: pointer;
-    transition: all 0.3s ease;
-  }
-
-  .upload-section:hover {
-    background: linear-gradient(135deg, rgba(29, 221, 189, 0.1), rgba(29, 221, 189, 0.05));
-    transform: translateY(-2px);
-  }
-
-  .upload-section h3 {
-    color: var(--primary);
-    margin-bottom: 0.5rem;
-    font-size: 1.3rem;
-  }
-
-  .upload-section p {
-    color: rgba(215, 204, 200, 0.7);
-    margin-bottom: 1rem;
-  }
-
-  .files-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 1.5rem;
-  }
-
-  .files-header h2 {
-    color: var(--primary);
-    font-size: 1.5rem;
-  }
-
-  .files-count {
-    color: rgba(215, 204, 200, 0.7);
-    font-size: 0.9rem;
-  }
-
-  .files-list {
-    display: flex;
-    flex-direction: column;
-    gap: 1rem;
-  }
-
-  .file-item {
-    background: rgba(250, 250, 250, 0.05);
-    border: 1px solid rgba(29, 221, 189, 0.2);
-    border-radius: 12px;
-    padding: 1.5rem;
-    display: flex;
-    align-items: center;
-    gap: 1.5rem;
-    transition: all 0.3s ease;
-  }
-
-  .file-item:hover {
-    background: rgba(250, 250, 250, 0.08);
-    border-color: var(--primary);
-    transform: translateX(5px);
-  }
-
-  .file-icon-container {
-    width: 50px;
-    height: 50px;
-    background: var(--primary);
-    border-radius: 10px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.5rem;
-    flex-shrink: 0;
-  }
-
-  .file-info {
-    flex: 1;
-  }
-
-  .file-name {
-    color: #D7CCC8;
-    font-size: 1.1rem;
-    font-weight: 500;
-    margin-bottom: 0.3rem;
-  }
-
-  .file-meta {
-    color: rgba(215, 204, 200, 0.6);
-    font-size: 0.85rem;
-  }
-
-  .file-actions {
-    display: flex;
-    gap: 0.5rem;
-  }
-
-  .file-actions button {
-    padding: 0.5rem 1rem;
-    font-size: 0.85rem;
-    border-radius: 6px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    border: 2px solid transparent;
-  }
-
-  .btn-view {
-    background: transparent;
-    color: var(--primary);
-    border-color: var(--primary);
-  }
-
-  .btn-view:hover {
-    background: var(--primary);
-    color: var(--secondary);
-  }
-
-  .btn-download {
-    background: var(--primary);
-    color: var(--secondary);
-  }
-
-  .btn-download:hover {
-    background: transparent;
-    border-color: var(--primary);
-    color: var(--primary);
-  }
-
-  .btn-delete {
-    background: transparent;
-    color: #ff6b6b;
-    border-color: #ff6b6b;
-  }
-
-  .btn-delete:hover {
-    background: #ff6b6b;
-    color: white;
-  }
-
-  .empty-state {
-    text-align: center;
-    padding: 4rem 2rem;
-    color: rgba(215, 204, 200, 0.5);
-  }
-
-  .empty-state svg {
-    width: 80px;
-    height: 80px;
-    margin-bottom: 1rem;
-    opacity: 0.3;
-  }
-
-  input[type="file"] {
-    display: none;
-  }
-
-  /* Modal for viewing files */
-  .modal {
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.9);
-    z-index: 1000;
-    align-items: center;
-    justify-content: center;
-  }
-
-  .modal.active {
-    display: flex;
-  }
-
-  .modal-content {
-    background: #181818;
-    border-radius: 12px;
-    padding: 2rem;
-    max-width: 90%;
-    max-height: 90%;
-    overflow: auto;
-    position: relative;
-  }
-
-  .modal-close {
-    position: absolute;
-    top: 1rem;
-    right: 1rem;
-    background: var(--primary);
-    color: var(--secondary);
-    border: none;
-    border-radius: 50%;
-    width: 40px;
-    height: 40px;
-    font-size: 1.5rem;
-    cursor: pointer;
-  }
-
-  .modal-content img {
-    max-width: 100%;
-    height: auto;
-    border-radius: 8px;
-  }
-
-  .modal-content pre {
-    color: #D7CCC8;
-    white-space: pre-wrap;
-    word-wrap: break-word;
-  }
-
-  @media (max-width: 768px) {
-    .file-item {
-      flex-direction: column;
-      align-items: flex-start;
-    }
-
-    .file-actions {
-      width: 100%;
-      flex-wrap: wrap;
-    }
-
-    .file-actions button {
-      flex: 1;
-    }
-  }
+/* --- Nav underline animation --- */
+.nav-links a {
+  position: relative;
+}
+.nav-links a::after {
+  content: "";
+  position: absolute;
+  width: 0%;
+  height: 2px;
+  background: var(--primary);
+  left: 0;
+  bottom: -4px;
+  transition: width 0.3s ease;
+}
+.nav-links a:hover::after {
+  width: 100%;
+}
