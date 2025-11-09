@@ -311,3 +311,100 @@ section.about .right p{
   section{ padding-block: clamp(1.2rem,6vw,2.5rem); padding-inline: .75rem; }
   .services-head + p{ margin-bottom: 1.5rem; }
 }
+ /* Fade-in animation */
+  .fade-in {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.8s ease, transform 0.8s ease;
+  }
+  
+  .fade-in.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  /* Stats counter */
+  .stats-container {
+    display: flex;
+    gap: 2rem;
+    justify-content: center;
+    margin-top: 2rem;
+    flex-wrap: wrap;
+  }
+
+  .stat-box {
+    background: linear-gradient(135deg, rgba(29, 221, 189, 0.1), rgba(29, 221, 189, 0.05));
+    border: 2px solid rgba(29, 221, 189, 0.3);
+    border-radius: 12px;
+    padding: 1.5rem 2rem;
+    text-align: center;
+    min-width: 150px;
+    transition: all 0.3s ease;
+  }
+
+  .stat-box:hover {
+    transform: translateY(-5px);
+    border-color: var(--primary);
+    box-shadow: 0 10px 30px rgba(29, 221, 189, 0.2);
+  }
+
+  .stat-number {
+    font-size: 2.5rem;
+    font-weight: 600;
+    color: var(--primary);
+    display: block;
+  }
+
+  .stat-label {
+    color: #D7CCC8;
+    font-size: 0.9rem;
+    margin-top: 0.5rem;
+  }
+
+  /* Skills progress bars */
+  .skills-section {
+    margin-top: 3rem;
+    max-width: 600px;
+  }
+
+  .skill-item {
+    margin-bottom: 1.5rem;
+  }
+
+  .skill-name {
+    color: var(--primary);
+    font-weight: 500;
+    margin-bottom: 0.5rem;
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .skill-bar {
+    height: 10px;
+    background: rgba(29, 221, 189, 0.2);
+    border-radius: 10px;
+    overflow: hidden;
+  }
+
+  .skill-progress {
+    height: 100%;
+    background: linear-gradient(90deg, var(--primary), #00d9a0);
+    border-radius: 10px;
+    width: 0%;
+    transition: width 1.5s ease;
+  }
+
+  .skill-progress.animate {
+    width: var(--progress);
+  }
+
+  /* Typing effect */
+  .typing-text {
+    border-right: 2px solid var(--primary);
+    animation: blink 0.7s infinite;
+  }
+
+  @keyframes blink {
+    0%, 100% { border-color: transparent; }
+    50% { border-color: var(--primary); }
+  }
