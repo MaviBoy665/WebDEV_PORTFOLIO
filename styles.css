@@ -47,13 +47,13 @@ header nav{
 }
 
 header nav .logo{ 
-  margin-right: auto; /* FIXED: Push nav items away from logo */
+  margin-right: clamp(2rem, 4vw, 4rem); /* FIXED: More space after logo */
   flex-shrink: 0; /* Prevent logo from shrinking */
 }
 
 header nav .left{ 
   display:flex; 
-  gap:1rem; 
+  gap: clamp(1.5rem, 3vw, 3rem); /* FIXED: Increased gap between nav items */
   align-items:center; 
   flex-wrap:wrap;
   margin-right: auto; /* FIXED: Push CONTACT button to the right */
@@ -204,6 +204,80 @@ section.services .card-grid .card:hover p{ color: var(--white); }
 
 /* Fix for any long text: wrap */
 h1,h2,h3,p,a,button { word-wrap: break-word; }
+
+/* FOOTER STYLES */
+footer{
+  background-color: var(--bgDark);
+  color: #D7CCC8;
+  text-align: center;
+  padding: clamp(2rem, 4vw, 3rem) 1rem;
+  margin-top: clamp(3rem, 6vw, 6rem);
+  font-size: clamp(0.85rem, 1.2vw, 0.95rem);
+  font-weight: 300;
+  letter-spacing: 0.5px;
+  border-top: 1px solid rgba(29, 221, 189, 0.2);
+}
+
+/* ABOUT PAGE SPECIFIC STYLES */
+section.about .flex{
+  gap: clamp(2rem, 5vw, 4rem);
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+section.about .left{
+  flex: 1 1 300px;
+  min-width: 260px;
+  max-width: 48%;
+  display: flex;
+  justify-content: center;
+}
+
+section.about .left img{
+  width: 100%;
+  max-width: 450px;
+  height: auto;
+  border-radius: 12px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  transition: transform 0.3s ease;
+}
+
+section.about .left img:hover{
+  transform: scale(1.02);
+}
+
+section.about .right{
+  flex: 1 1 300px;
+  min-width: 260px;
+  max-width: 48%;
+}
+
+section.about .right p{
+  font-family: 'Lato', sans-serif;
+  font-size: clamp(1rem, 1.8vw, 1.15rem) !important;
+  line-height: 1.8;
+  color: #D7CCC8;
+  font-weight: 400;
+  margin-bottom: 1.5rem;
+}
+
+/* Mobile responsive for about page */
+@media (max-width: 768px){
+  section.about .left,
+  section.about .right{
+    flex-basis: 100%;
+    max-width: 100%;
+  }
+  
+  section.about .left{
+    order: 1;
+  }
+  
+  section.about .right{
+    order: 2;
+    margin-top: 1rem;
+  }
+}
 
 /* --- Responsive tweaks (breakpoints) --- */
 
